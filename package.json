@@ -1,0 +1,20 @@
+{
+  "name": "memberlist-cleaner",
+  "version": "1.0.0",
+  "description": "Discord Bot in discord.js for 1v1 player matchmaking (finding opponents)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LemonPocky/memberlist-cleaner.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LemonPocky/memberlist-cleaner/issues"
+  },
+  "homepage": "https://github.com/LemonPocky/memberlist-cleaner#readme"
+}
