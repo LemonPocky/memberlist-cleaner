@@ -16,5 +16,13 @@
   "bugs": {
     "url": "https://github.com/LemonPocky/memberlist-cleaner/issues"
   },
-  "homepage": "https://github.com/LemonPocky/memberlist-cleaner#readme"
+  "homepage": "https://github.com/LemonPocky/memberlist-cleaner#readme",
+  "dependencies": {
+    "discord.js": "^13.0.1",
+    "dotenv": "^10.0.0",
+    "slash-create": "^3.4.3"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0"
+  }
 }

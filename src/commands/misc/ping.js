@@ -1,6 +1,6 @@
 const { SlashCommand, CommandOptionType } = require('slash-create');
 
-class HelloCommand extends SlashCommand {
+class PingCommand extends SlashCommand {
   constructor(creator) {
     super(creator, {
       name: 'ping',
@@ -24,4 +24,4 @@ class HelloCommand extends SlashCommand {
   }
 }
 
-module.exports = HelloCommand;
+module.exports = PingCommand;

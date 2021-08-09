@@ -6,11 +6,14 @@ require('dotenv').config();
 const { SlashCreator, GatewayServer } = require('slash-create');
 
 // Package for interacting with Discord's API
-const Discord = require('discord.js');
+const { Client, Intents } = require('discord.js');
 
 const path = require('path');
 
-const client = new Discord.Client();
+const botIntents = new Intents();
+botIntents.add(Intents.FLAGS.GUILD_MEMBERS);
+
+const client = new Client({ intents: botIntents });
 
 // Set up slash commands
 const creator = new SlashCreator({
@@ -24,10 +27,11 @@ console.log('Starting creator...');
 creator.on('commandRegister', (command, cmdCreator) => {
   console.log(`Registered command: ${command.commandName}`);
 });
-
 creator.on('commandRun', (command, result, ctx) => {
   console.log(`Command called: ${command.commandName}`);
 });
+
+creator.client = client;
 
 creator
   .withServer(
