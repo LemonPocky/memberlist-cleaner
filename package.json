@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/LemonPocky/memberlist-cleaner#readme",
   "dependencies": {
+    "dayjs": "^1.10.6",
     "discord.js": "^13.0.1",
     "dotenv": "^10.0.0",
     "slash-create": "^3.4.3"

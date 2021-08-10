@@ -1,3 +1,5 @@
+'use strict';
+
 const { SlashCommand, CommandOptionType } = require('slash-create');
 
 class PingCommand extends SlashCommand {
