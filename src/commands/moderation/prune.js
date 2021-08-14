@@ -104,7 +104,7 @@ any messages in the last ${ctx.options.last_message_sent} days!`,
       const channels = await guild.channels.fetch();
 
       // Update message to let the user know of our progress
-      const updateMessage = await channels
+      let updateMessage = await channels
         .get(compCtx.channelID)
         .send('Searching for users to remove...');
 
@@ -157,10 +157,10 @@ any messages in the last ${ctx.options.last_message_sent} days!`,
               }
               const authorId = message.author.id;
               // Add this user to our seen guild members (they are safe)
-              seenGuildMembers.set(
-                authorId,
-                guildMembers.get(authorId).user.username
-              );
+              const seenMember = guildMembers.get(authorId);
+              if (seenMember && !seenGuildMembers.has(authorId)) {
+                seenGuildMembers.set(authorId, seenMember);
+              }
               // Update the lastMessageTimestamp if we see an earlier message
               if (message.createdTimestamp < lastMessageTimestamp) {
                 lastMessageTimestamp = message.createdTimestamp;
@@ -177,12 +177,42 @@ any messages in the last ${ctx.options.last_message_sent} days!`,
       const staleGuildMembers = guildMembers.difference(seenGuildMembers);
 
       // Kick members :devil:
-      for await (const userID of staleGuildMembers.keys()) {
-        console.log(userID);
-      }
+      updateMessage = await updateMessage.edit(
+        `${updateMessage.content}\nNow removing ${staleGuildMembers.size} members...`
+      );
 
-      console.log(`Prune is done.`);
+      // loop to kick members using setInterval
+      this._batchKick(
+        staleGuildMembers,
+        async () => {
+          // Callback when all members have been kicked
+          console.log(`Prune is done.`);
+          updateMessage = await updateMessage.edit(
+            `${updateMessage.content}\nDone! Removed ${staleGuildMembers.size} members.`
+          );
+        },
+        channels.get(compCtx.channelID)
+      );
     });
+  }
+
+  // Helper function to mass kick guild members
+  // Requires a callback to call when all members have been kicked
+  _batchKick(membersMap, callback, testChannel) {
+    // Use spread to convert the values of membersMap into an array of users
+    const staleGuildMembers = [...membersMap.values()];
+    let index = 0;
+    const interval = setInterval(() => {
+      if (index >= staleGuildMembers.length) {
+        clearInterval(interval);
+        callback();
+      } else {
+        testChannel.send(
+          `Now kicking ${staleGuildMembers[index].displayName} ... (Test message only)`
+        );
+        index++;
+      }
+    }, 1000);
   }
 }
 
