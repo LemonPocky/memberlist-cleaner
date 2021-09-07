@@ -1,4 +1,10 @@
 # Memberlist Cleaner
+Remove members from a Discord server based on the time since their last message.
+
+## Intro
+Discord currently has a [prune](https://support.discord.com/hc/en-us/articles/213507137-What-is-Pruning-How-do-I-use-it-) feature. I found this to be insufficient because it kicks members based on last online activity, which doesn't take user participation in a server into account. This bot aims to solve that issue by kicking users based on the time since their last message was sent in the server, rather than last online activity.
+
+Note: This bot is incomplete; full usage instructions will be added when the bot works.
 
 Planned features:
 - Mass kick members from a Discord server based on:
